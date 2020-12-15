@@ -2,19 +2,21 @@ const path = require('path');
 
 const express = require('express');
 
+const rootDir = require('../util/path');
+const adminData = require('./admin');
+
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-   console.log('Root');
-//    res.send("<h1>Welcome to Shopping Cart</h1>"); For sending HTML content
-
-/*=========================
-|
-|   For sending HTML files using [path]
-|   Syntax  res.sendFile(path.join(__dirname, 'absulut path', 'linking folder', 'File name'));
-|
-|=========================== */
-   res.sendFile(path.join(__dirname, '../', 'views', 'shop.html'));
-})
+  const products = adminData.products;
+  res.render('shop', {
+    prods: products,
+    pageTitle: 'Shop',
+    path: '/',
+    hasProducts: products.length > 0,
+    activeShop: true,
+    productCSS: true
+  });
+});
 
 module.exports = router;
